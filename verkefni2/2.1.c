@@ -24,26 +24,28 @@
 |*                                                                                                    *|
 |*
 \*-----------------------------------------------------------------------------------------------4246-*/
-int counter = 0;
-int timer = 1000;
-int power = 127;
-void drive(){
+
+void drive(int timer) {
+	int power = 127;
 	motor[rightMotor] = power;
 	motor[leftMotor]  = power;
-	wait1Msec(timer);}
-void rev_drive(){
-	motor[rightMotor] = -127;
-	motor[leftMotor]  = -127;
-	wait1Msec(timer);}
+	wait1Msec(timer);
+}
+void rev_drive(int timer){
+	int power = -127
+	motor[rightMotor] = power;
+	motor[leftMotor]  = power;
+	wait1Msec(timer);
+}
 
 //+++++++++++++++++++++++++++++++++++++++++++++| MAIN |+++++++++++++++++++++++++++++++++++++++++++++++
 task main()
 {
-	for (counter; counter < 5; counter++){
-		drive();
-		rev_drive();
+	int timer = 1000;
+	for (int counter = 0; counter < 5; counter++) {
+		drive(timer);
+		rev_drive(timer);
 		timer += 1000
-
 	}
 }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
