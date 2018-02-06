@@ -25,14 +25,7 @@
 |*
 \*-----------------------------------------------------------------------------------------------4246-*/
 
-void drive(int timer) {
-	int power = 127;
-	motor[rightMotor] = power;
-	motor[leftMotor]  = power;
-	wait1Msec(timer);
-}
-void rev_drive(int timer){
-	int power = -127
+void drive(int timer, int power = 127) {
 	motor[rightMotor] = power;
 	motor[leftMotor]  = power;
 	wait1Msec(timer);
@@ -44,7 +37,7 @@ task main()
 	int timer = 1000;
 	for (int counter = 0; counter < 5; counter++) {
 		drive(timer);
-		rev_drive(timer);
+		drive(timer, -127);
 		timer += 1000
 	}
 }
