@@ -24,19 +24,23 @@
 |*                                                                                                    *|
 |*
 \*-----------------------------------------------------------------------------------------------4246-*/
+void drive(int power = 127) {
+	motor[rightMotor] = power;
+	motor[leftMotor]  = power;
+}
+
 task main()
 {
+  const int HALF_METER = 564;
   wait1Msec(100);
   for(int i = 1; i<=5; i++) {
   	SensorValue[rightEncoder] = 0;
   	SensorValue[leftEncoder] = 0;
-  	while(SensorValue[leftEncoder] > -564*i) {
-	    motor[rightMotor] = 127;
-	    motor[leftMotor] = 127;
+  	while(abs(SensorValue[leftEncoder]) < i * HALF_METER) {
+	    drive();
 	  }
-	  while(SensorValue[leftEncoder] <= 0) {
-	    motor[rightMotor] = -127;
-	    motor[leftMotor] = -127;
+	  while(abs(SensorValue[leftEncoder]) >= 0) {
+	    drive(-127);
 	  }
   }
 }
