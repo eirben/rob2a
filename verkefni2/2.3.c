@@ -30,25 +30,24 @@ void drive(int power = 127) {
 	motor[leftMotor]  = power;
 }
 
-void turn_right(){
+void turn(string direction) {
 	const int ONE_FOURTH_ROTATION = 293;
+	int left_speed = right_speed = 0;
 	SensorValue[rightEncoder] = 0;
 	SensorValue[leftEncoder] = 0;
-	while(abs(SensorValue[leftEncoder]) < ONE_FOURTH_ROTATION)
-	{
-		motor[rightMotor] = -127;
-	  motor[leftMotor] = 127;
-	}
-}
 
-void turn_left(){
-	const int ONE_FOURTH_ROTATION = 293;
-	SensorValue[rightEncoder] = 0;
-	SensorValue[leftEncoder] = 0;
+	if (direction == "right") {
+		left_speed = 127;
+		right_speed = -127;
+	} else if (direction == "left") {
+		left_speed = -127;
+		right_speed = 127;
+	}
+
 	while(abs(SensorValue[leftEncoder]) < ONE_FOURTH_ROTATION)
 	{
-		motor[rightMotor] = 127;
-	  motor[leftMotor] = -127;
+		motor[rightMotor] = right_speed;
+		motor[leftMotor] = left_speed;
 	}
 }
 
@@ -66,11 +65,11 @@ void drive_half_meter() {
 task main()
 {
 	drive_half_meter();
-	turn_left();
+	turn("left");
 	drive_half_meter();
-	turn_right();
+	turn("right");
 	drive_half_meter();
-	turn_right();
+	turn("right");
 	drive_half_meter();
 
 }
