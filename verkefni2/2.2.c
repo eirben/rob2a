@@ -27,21 +27,14 @@
 task main()
 {
   wait1Msec(100);
-
-  //Clear Encoders
-
   for(int i = 1; i<=5; i++) {
   	SensorValue[rightEncoder] = 0;
   	SensorValue[leftEncoder] = 0;
-  	while(SensorValue[leftEncoder] > -564*i)  // While less than 5 rotations on the leftEncoder...
-	  {
-	    //...Move Forward
+  	while(SensorValue[leftEncoder] > -564*i) {
 	    motor[rightMotor] = 127;
 	    motor[leftMotor] = 127;
 	  }
-	  while(SensorValue[leftEncoder] <= 0)  // While less than 5 rotations on the leftEncoder...
-	  {
-	    //...Move Backward
+	  while(SensorValue[leftEncoder] <= 0) {
 	    motor[rightMotor] = -127;
 	    motor[leftMotor] = -127;
 	  }
