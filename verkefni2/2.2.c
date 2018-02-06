@@ -25,8 +25,7 @@
 |*
 \*-----------------------------------------------------------------------------------------------4246-*/
 void drive(int power = 127) {
-	motor[rightMotor] = power;
-	motor[leftMotor]  = power;
+	motor[rightMotor] = motor[leftMotor] = power;
 }
 
 task main()
@@ -34,8 +33,7 @@ task main()
   const int HALF_METER = 564;
   wait1Msec(100);
   for(int i = 1; i<=5; i++) {
-  	SensorValue[rightEncoder] = 0;
-  	SensorValue[leftEncoder] = 0;
+  	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
   	while(abs(SensorValue[leftEncoder]) < i * HALF_METER) {
 	    drive();
 	  }

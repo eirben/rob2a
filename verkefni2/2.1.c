@@ -26,8 +26,7 @@
 \*-----------------------------------------------------------------------------------------------4246-*/
 
 void drive(int timer, int power = 127) {
-	motor[rightMotor] = power;
-	motor[leftMotor]  = power;
+	motor[rightMotor] = motor[leftMotor] = power;
 	wait1Msec(timer);
 }
 
