@@ -24,17 +24,53 @@
 |*                                                                                                    *|
 |*
 \*-----------------------------------------------------------------------------------------------4246-*/
+
+void drive(int power = 127) {
+	motor[rightMotor] = power;
+	motor[leftMotor]  = power;
+}
+
 void turn_right(){
+	const int ONE_FOURTH_ROTATION = 293;
 	SensorValue[rightEncoder] = 0;
 	SensorValue[leftEncoder] = 0;
-	while(SensorValue[leftEncoder] > -293)  // While less than 5 rotations on the leftEncoder...
+	while(abs(SensorValue[leftEncoder]) < ONE_FOURTH_ROTATION)
 	{
 		motor[rightMotor] = -127;
 	  motor[leftMotor] = 127;
 	}
 }
+
+void turn_left(){
+	const int ONE_FOURTH_ROTATION = 293;
+	SensorValue[rightEncoder] = 0;
+	SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[leftEncoder]) < ONE_FOURTH_ROTATION)
+	{
+		motor[rightMotor] = 127;
+	  motor[leftMotor] = -127;
+	}
+}
+
+void drive_half_meter() {
+	const int HALF_METER = 564;
+	for(int i = 1; i<=5; i++) {
+		SensorValue[rightEncoder] = 0;
+		SensorValue[leftEncoder] = 0;
+		while(abs(SensorValue[leftEncoder]) < HALF_METER) {
+			drive();
+		}
+	}
+}
+
 task main()
 {
-  wait1Msec(100);
+	drive_half_meter();
+	turn_left();
+	drive_half_meter();
 	turn_right();
+	drive_half_meter();
+	turn_right();
+	drive_half_meter();
+
 }
