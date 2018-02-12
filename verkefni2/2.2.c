@@ -12,15 +12,12 @@
 #pragma config(Motor,  port7,           armMotor,      tmotorVex393, openLoop)
 #pragma config(Motor,  port9,           rightMotor,    tmotorVex393, openLoop)
 
-/*----------------------------------------------------------------------------------------------------*\
-|*                                         - Moving Forward -                                         *|
-|*                                      ROBOTC on VEX 2.0 CORTEX                                      *|
-|*                                                                                                    *|
-|*  This program instructs your robot to move forward at full power for three seconds.  There is a    *|
-|*  two second pause at the beginning of the program.                                                 *|
-|*                                                                                                    *|
-|*
-\*-----------------------------------------------------------------------------------------------4246-*/
+/* verkefni 2.2
+Neptunus / Isar
+
+radius hjóla eru 2 tommur, ummál er því 12,57 tommur eða 32cm
+Til að ná 50cm þarf 50/31,93 = 1,566 snúninga eða 1,566*360 gráður = 564 gráður
+*/
 void drive(int power = 127) {
 	motor[rightMotor] = motor[leftMotor] = power;
 }
@@ -29,7 +26,7 @@ task main()
 {
   const int HALF_METER = 564;
   wait1Msec(100);
-  for(int i = 1; i<=2; i++) {
+  for(int i = 1; i<=5; i++) {
   	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
   	while(abs(SensorValue[leftEncoder]) < i * HALF_METER) {
 	    drive();
