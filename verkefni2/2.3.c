@@ -15,13 +15,16 @@
 
 /* verkefni 2.3
 Neptunus / Isar
-
 Utreikningar:
-Fjarlægğ milli hjóla horn í horn eru 33cm - şví er ummál hrings eru um 104cm
-til ağ snúast um 90 gráğur şarf hvert hjól ağ ferğast um einn fjórğung hrings, eğa 26cm
+FjarlÃ¦gÃ° milli hjÃ³la horn Ã­ horn eru 33cm - Ã¾vÃ­ er ummÃ¡l hrings eru um 104cm
+til aÃ° snÃºast um 90 grÃ¡Ã°ur Ã¾arf hvert hjÃ³l aÃ° ferÃ°ast um einn fjÃ³rÃ°ung hrings, eÃ°a 26cm
 26/32 = 0,8125
 0,8125 * einn hringur(360) = 292
 */
+
+void stop(){
+	motor[rightMotor] = motor[leftMotor] = 0;
+}
 
 void drive(int right_speed = 127, int left_speed = 127) {
 	motor[rightMotor] = right_speed;
@@ -35,38 +38,40 @@ void turn(int right_speed, int left_speed) {
 	while(abs(SensorValue[leftEncoder]) < ONE_FOURTH_ROTATION) {
 		drive(right_speed, left_speed);
 	}
+	stop();
+	wait1Msec(300);
 }
 
 void turn_left() {
-	turn(-50, 50);
+	turn(50, -50);
 }
 
 void turn_right() {
-	turn(50, -50);
+	turn(-46, 52);
 }
 
 void drive_half_meter() {
 	const int HALF_METER = 564;
-	for(int i = 1; i<=2; i++) {
-		SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
-		while(abs(SensorValue[leftEncoder]) < HALF_METER) {
-			if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
-				drive(80,80);
-			}
-			else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
-				drive(60,80);
-			}
-			else {
-				drive(80,60);
-			}
+	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[leftEncoder]) < HALF_METER) {
+		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
+			drive(80,80);
+		}
+		else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
+			drive(60,80);
+		}
+		else {
+			drive(80,60);
 		}
 	}
+	stop();
+	wait1Msec(300);
 }
 
 task main()
 {
 	drive_half_meter();
-	turn_left();
+	turn_left(); 
 	drive_half_meter();
 	turn_right();
 	drive_half_meter();
