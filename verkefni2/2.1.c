@@ -16,19 +16,49 @@
 Neptunus / Isar
 */
 
-void drive(int timer, int power = 127) {
-	motor[rightMotor] = motor[leftMotor] = power;
+void driveforward(int timer) {
+	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
+	int power = 110;
+	int lesspower = 100;
+	if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
+		motor[rightMotor] = motor[leftMotor] = power;
+	}
+	else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
+		motor[rightMotor] = lesspower;
+		motor[leftMotor] = power;
+	}
+	else {
+		motor[rightMotor] = power;
+		motor[leftMotor] = lesspower;
+	}
+	wait1Msec(timer);
+}
+
+void drivebackward(int timer) {
+	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
+	int power = -110;
+	int lesspower = -100;
+	if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
+		motor[rightMotor] = motor[leftMotor] = power;
+	}
+	else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])	{
+		motor[rightMotor] = lesspower;
+		motor[leftMotor] = power;
+	}
+	else {
+		motor[rightMotor] = power;
+		motor[leftMotor] = lesspower;
+	}
 	wait1Msec(timer);
 }
 
 task main()
 {
-	SensorValue[rightEncoder] = 0;
-	SensorValue[leftEncoder] = 0;
 	int timer = 1000;
+
 	for (int counter = 0; counter < 5; counter++) {
-		drive(timer);
-		drive(timer, -127);
+		driveforward(timer);
+		drivebackward(timer);
 		timer += 1000;
 	}
 }
