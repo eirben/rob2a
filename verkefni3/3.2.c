@@ -22,20 +22,22 @@
 |*                                                                                                    *|
 |*
 \*-----------------------------------------------------------------------------------------------4246-*/
-int power = 30;
 void remote_control_arm(){
-	while(1 == 1)  // While less than 5 rotations on the leftEncoder...
+	int power = 30;
+	while(1 == 1) 
 	{
-		while(vexRT[Btn6D] == 1){
+		if(vexRT[Btn6D] == 1){
 			motor[armMotor]  = power;
 			}
-		while(vexRT[Btn6U] == 1){
+		else if(vexRT[Btn6U] == 1){
 			motor[armMotor]  = -power;
+			}
+		else {
+			motor(armMotor) = 0;
 			}
 	}
 }
 task main()
 {
-
 	remote_control_arm();
 }
