@@ -16,8 +16,8 @@
 /* verkefni 2.3
 Neptunus / Isar
 Utreikningar:
-Fjarlægð milli hjóla horn í horn eru 33cm - því er ummál hrings eru um 104cm
-til að snúast um 90 gráður þarf hvert hjól að ferðast um einn fjórðung hrings, eða 26cm
+Fjarlaegd milli hjola: 33cm - ummal grunn-hrings eru um 104cm
+til ad snuast um 90 gradur tharf hvert hjol ad ferdast um einn fjordung hrings, eda 26cm
 26/32 = 0,8125
 0,8125 * einn hringur(360) = 292
 */
