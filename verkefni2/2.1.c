@@ -16,46 +16,57 @@
 Neptunus / Isar
 */
 
+void stop(int ms = 400){
+	motor[rightMotor] = motor[leftMotor] = 0;
+	wait1Msec(ms);
+}
+
 void driveforward(int timer) {
 	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
 	int power = 110;
 	int lesspower = 100;
-	if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
-		motor[rightMotor] = motor[leftMotor] = power;
+	ClearTimer(T1);
+	while(time1[T1] < timer) {
+		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
+			motor[rightMotor] = motor[leftMotor] = power;
+		}
+		else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
+			motor[rightMotor] = lesspower;
+			motor[leftMotor] = power;
+		}
+		else {
+			motor[rightMotor] = power;
+			motor[leftMotor] = lesspower;
+		}
 	}
-	else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
-		motor[rightMotor] = lesspower;
-		motor[leftMotor] = power;
-	}
-	else {
-		motor[rightMotor] = power;
-		motor[leftMotor] = lesspower;
-	}
-	wait1Msec(timer);
+	stop();
 }
 
 void drivebackward(int timer) {
 	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
 	int power = -110;
 	int lesspower = -100;
-	if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
-		motor[rightMotor] = motor[leftMotor] = power;
+	ClearTimer(T1);
+	while(time1[T1] < timer) {
+		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
+			motor[rightMotor] = motor[leftMotor] = power;
+		}
+		else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])	{
+			motor[rightMotor] = lesspower;
+			motor[leftMotor] = power;
+		}
+		else {
+			motor[rightMotor] = power;
+			motor[leftMotor] = lesspower;
+		}
 	}
-	else if(SensorValue[leftEncoder] < SensorValue[rightEncoder])	{
-		motor[rightMotor] = lesspower;
-		motor[leftMotor] = power;
-	}
-	else {
-		motor[rightMotor] = power;
-		motor[leftMotor] = lesspower;
-	}
-	wait1Msec(timer);
+	stop();
 }
 
 task main()
 {
+	//driveforward(4000);
 	int timer = 1000;
-
 	for (int counter = 0; counter < 5; counter++) {
 		driveforward(timer);
 		drivebackward(timer);
