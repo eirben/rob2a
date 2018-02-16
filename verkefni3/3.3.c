@@ -18,12 +18,12 @@ Neptunus / Isar
 
 Byggt a verkefni 2.3
 */
-bool running = true;
+
+void stop(){
+	motor[rightMotor] = motor[leftMotor] = 0;
+}
 
 void drive(int right_speed = 127, int left_speed = 127) {
-	if (VexRT[Btn8D] == true) {
-		return;
-	}
 	motor[rightMotor] = right_speed;
 	motor[leftMotor]  = left_speed;
 }
@@ -35,48 +35,49 @@ void turn(int right_speed, int left_speed) {
 	while(abs(SensorValue[leftEncoder]) < ONE_FOURTH_ROTATION) {
 		drive(right_speed, left_speed);
 	}
-	wait1Msec(100);
+	stop();
+	wait1Msec(300);
 }
 
 void turn_left() {
-	turn(-50, 50);
+	turn(50, -50);
 }
 
 void turn_right() {
-	turn(50, -50);
+	turn(-46, 52);
 }
 
 void drive_half_meter() {
 	const int HALF_METER = 564;
-	for(int i = 1; i<=2; i++) {
-		SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
-		while(abs(SensorValue[leftEncoder]) < HALF_METER) {
-			if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
-				drive(80,80);
-			}
-			else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
-				drive(60,80);
-			}
-			else {
-				drive(80,60);
-			}
+	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
+	while(abs(SensorValue[leftEncoder]) < HALF_METER) {
+		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
+			drive(80,80);
+		}
+		else if(SensorValue[leftEncoder] > SensorValue[rightEncoder])	{
+			drive(60,80);
+		}
+		else {
+			drive(80,60);
 		}
 	}
+	stop();
+	wait1Msec(300);
+}
+
+task solve() {
+	drive_half_meter();
+	turn_left();
+	drive_half_meter();
+	turn_right();
+	drive_half_meter();
+	turn_right();
+	drive_half_meter();
 }
 
 task main()
 {
-	drive_half_meter();
-	if (!running) return;
-	turn_left();
-	if (!running) return;
-	drive_half_meter();
-	if (!running) return;
-	turn_right();
-	if (!running) return;
-	drive_half_meter();
-	if (!running) return;
-	turn_right();
-	if (!running) return;
-	drive_half_meter();
+	StartTask(solve);
+	while(!vexRT[Btn8D]){}
+	StopAllTasks();
 }
