@@ -23,8 +23,8 @@ void stop(int ms = 400){
 
 void driveforward(int timer) {
 	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
-	int power = 110;
-	int lesspower = 100;
+	int power = 60;
+	int lesspower = 50;
 	ClearTimer(T1);
 	while(time1[T1] < timer) {
 		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
@@ -44,8 +44,8 @@ void driveforward(int timer) {
 
 void drivebackward(int timer) {
 	SensorValue[rightEncoder] = SensorValue[leftEncoder] = 0;
-	int power = -110;
-	int lesspower = -100;
+	int power = -60;
+	int lesspower = -50;
 	ClearTimer(T1);
 	while(time1[T1] < timer) {
 		if(SensorValue[rightEncoder] == SensorValue[leftEncoder]) {
@@ -65,7 +65,6 @@ void drivebackward(int timer) {
 
 task main()
 {
-	//driveforward(4000);
 	int timer = 1000;
 	for (int counter = 0; counter < 5; counter++) {
 		driveforward(timer);
