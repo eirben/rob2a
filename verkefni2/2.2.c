@@ -31,6 +31,7 @@ task main()
   	while(abs(SensorValue[leftEncoder]) < i * HALF_METER) {
 	    drive();
 	  }
+	  // comment
 	  while(SensorValue[leftEncoder] < 0) { // doesn't stop despite value going over 0 - not sure how to proceed
 	    drive(-127);
 	  }
