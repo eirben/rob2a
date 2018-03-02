@@ -25,9 +25,9 @@
 void remote_control(){
 	SensorValue[rightEncoder] = 0;
 	SensorValue[leftEncoder] = 0;
-	while(1 == 1)  // While less than 5 rotations on the leftEncoder...
+	while(true)  // While less than 5 rotations on the leftEncoder...
 	{
-		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1])/2;  // (y + x)/2
+		motor[leftMotor]  = (vexRT[Ch2] + vexRT[Ch1])/2;
     motor[rightMotor] = (vexRT[Ch2] - vexRT[Ch1])/2;
 	}
 }
